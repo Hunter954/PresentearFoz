@@ -5,30 +5,31 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{% block title %}Painel{% endblock %} | Presentear Foz Admin</title>
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 <body class="admin-body">
   <aside class="admin-sidebar" data-admin-sidebar>
     <a class="admin-logo" href="{{ url_for('admin.dashboard') }}"><img src="{{ url_for('static', filename='img/logo-horizontal.png') }}" alt="Presentear Foz"><span>ADMIN</span></a>
     <nav class="admin-nav">
-      <a class="{% if request.endpoint=='admin.dashboard' %}active{% endif %}" href="{{ url_for('admin.dashboard') }}"><span>▦</span>Visão geral</a>
+      <a class="{% if request.endpoint=='admin.dashboard' %}active{% endif %}" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-speedometer2"></i>Visão geral</a>
       <div class="nav-label">CATÁLOGO</div>
-      <a class="{% if request.endpoint in ['admin.products','admin.product_new','admin.product_edit'] %}active{% endif %}" href="{{ url_for('admin.products') }}"><span>□</span>Produtos</a>
-      <a class="{% if request.endpoint=='admin.categories' %}active{% endif %}" href="{{ url_for('admin.categories') }}"><span>⌗</span>Categorias</a>
-      <a class="{% if request.endpoint=='admin.banners' %}active{% endif %}" href="{{ url_for('admin.banners') }}"><span>▰</span>Banners</a>
-      <a class="{% if request.endpoint=='admin.clients' %}active{% endif %}" href="{{ url_for('admin.clients') }}"><span>◇</span>Clientes</a>
+      <a class="{% if request.endpoint in ['admin.products','admin.product_new','admin.product_edit'] %}active{% endif %}" href="{{ url_for('admin.products') }}"><i class="bi bi-box-seam"></i>Produtos</a>
+      <a class="{% if request.endpoint=='admin.categories' %}active{% endif %}" href="{{ url_for('admin.categories') }}"><i class="bi bi-tags"></i>Categorias</a>
+      <a class="{% if request.endpoint=='admin.banners' %}active{% endif %}" href="{{ url_for('admin.banners') }}"><i class="bi bi-images"></i>Banners</a>
+      <a class="{% if request.endpoint=='admin.clients' %}active{% endif %}" href="{{ url_for('admin.clients') }}"><i class="bi bi-building"></i>Clientes</a>
       <div class="nav-label">ATENDIMENTO</div>
-      <a class="{% if request.endpoint in ['admin.carts','admin.cart_detail'] %}active{% endif %}" href="{{ url_for('admin.carts') }}"><span>🛒</span>Carrinhos</a>
+      <a class="{% if request.endpoint in ['admin.carts','admin.cart_detail'] %}active{% endif %}" href="{{ url_for('admin.carts') }}"><i class="bi bi-cart3"></i>Carrinhos</a>
       <div class="nav-label">GESTÃO</div>
-      <a class="{% if request.endpoint=='admin.media' %}active{% endif %}" href="{{ url_for('admin.media') }}"><span>▧</span>Biblioteca de mídia</a>
-      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.settings' %}active{% endif %}" href="{{ url_for('admin.settings') }}"><span>⚙</span>Configurações</a>{% endif %}
-      {% if current_user.role == 'superadmin' %}<a class="{% if request.endpoint=='admin.users' %}active{% endif %}" href="{{ url_for('admin.users') }}"><span>♙</span>Usuários</a>{% endif %}
-      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.audit_logs' %}active{% endif %}" href="{{ url_for('admin.audit_logs') }}"><span>≡</span>Auditoria</a>{% endif %}
+      <a class="{% if request.endpoint=='admin.media' %}active{% endif %}" href="{{ url_for('admin.media') }}"><i class="bi bi-collection"></i>Biblioteca de mídia</a>
+      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.settings' %}active{% endif %}" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i>Configurações</a>{% endif %}
+      {% if current_user.role == 'superadmin' %}<a class="{% if request.endpoint=='admin.users' %}active{% endif %}" href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i>Usuários</a>{% endif %}
+      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.audit_logs' %}active{% endif %}" href="{{ url_for('admin.audit_logs') }}"><i class="bi bi-clipboard-data"></i>Auditoria</a>{% endif %}
     </nav>
-    <div class="sidebar-footer"><a href="{{ url_for('main.home') }}" target="_blank">Abrir site ↗</a><form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sair</button></form></div>
+    <div class="sidebar-footer"><a href="{{ url_for('main.home') }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Abrir site</a><form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit"><i class="bi bi-box-arrow-right"></i> Sair</button></form></div>
   </aside>
   <div class="admin-shell">
-    <header class="admin-topbar"><button class="sidebar-toggle" type="button" data-sidebar-toggle>☰</button><div><span class="welcome">Olá, {{ current_user.name }}</span><small>{{ current_user.role }}</small></div><a class="topbar-site" href="{{ url_for('main.home') }}" target="_blank">Visualizar loja ↗</a></header>
+    <header class="admin-topbar"><button class="sidebar-toggle" type="button" data-sidebar-toggle><i class="bi bi-list"></i></button><div><span class="welcome">Olá, {{ current_user.name }}</span><small>{{ current_user.role }}</small></div><a class="topbar-site" href="{{ url_for('main.home') }}" target="_blank"><i class="bi bi-eye"></i> Visualizar loja</a></header>
     <main class="admin-main">
       {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="admin-alerts">{% for category, message in messages %}<div class="admin-alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
       {% block content %}{% endblock %}

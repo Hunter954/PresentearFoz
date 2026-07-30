@@ -33,17 +33,17 @@
             <input type="hidden" name="product_id" value="{{ product.id }}">
             <div class="quantity-field"><label for="quantity">Quantidade</label><div class="quantity-control"><button type="button" data-qty-minus>−</button><input id="quantity" name="quantity" type="number" min="{{ product.min_quantity or 1 }}" {% if product.track_stock and product.stock is not none %}max="{{ product.stock }}"{% endif %} value="{{ product.min_quantity or 1 }}"><button type="button" data-qty-plus>+</button></div>{% if product.min_quantity > 1 %}<small>Mínimo: {{ product.min_quantity }} unidades</small>{% endif %}</div>
             <label class="field-full">Observação da personalização <span>(opcional)</span><textarea name="personalization" rows="3" placeholder="Ex.: nome Kevin, logo da empresa, frase..."></textarea></label>
-            <button class="button button-primary button-large button-block" type="submit">Adicionar ao carrinho</button>
-            <a class="button button-outline button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de saber mais sobre o produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener">Tirar dúvida no WhatsApp</a>
+            <button class="button button-primary button-large button-block" type="submit"><i class="bi bi-cart-plus" aria-hidden="true"></i> Adicionar ao carrinho</button>
+            <a class="button button-outline button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de saber mais sobre o produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i> Tirar dúvida no WhatsApp</a>
           </form>
         {% else %}
           <div class="product-buy-box unavailable-box"><strong>Produto indisponível no momento</strong><p>Fale com a equipe para consultar reposição ou alternativas personalizadas.</p><a class="button button-whatsapp button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de consultar a disponibilidade do produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener">Consultar pelo WhatsApp</a></div>
         {% endif %}
-        <div class="safe-notes"><span>✓ Carrinho salvo neste navegador</span><span>✓ Código único para o atendimento</span><span>✓ Sem pagamento online</span></div>
+        <div class="safe-notes"><span><i class="bi bi-device-ssd" aria-hidden="true"></i> Carrinho salvo neste navegador</span><span><i class="bi bi-upc-scan" aria-hidden="true"></i> Código único para o atendimento</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Sem pagamento online</span></div>
       </div>
     </div>
   </div>
 </section>
-{% if product.description %}<section class="section section-soft"><div class="container narrow"><span class="eyebrow">DETALHES DO PRODUTO</span><h2>Descrição</h2><div class="prose pre-line">{{ product.description }}</div></div></section>{% endif %}
+{% if product.description %}<section class="section section-soft product-description-section"><div class="container"><span class="eyebrow">DETALHES DO PRODUTO</span><h2>Descrição</h2><div class="prose pre-line">{{ product.description }}</div></div></section>{% endif %}
 {% if related %}<section class="section"><div class="container"><div class="section-heading"><div><span class="eyebrow">VOCÊ TAMBÉM PODE GOSTAR</span><h2>Produtos relacionados</h2></div></div><div class="product-grid">{% for product in related %}{% include "partials/product_card.html" %}{% endfor %}</div></div></section>{% endif %}
 {% endblock %}
