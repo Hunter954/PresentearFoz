@@ -84,8 +84,16 @@ def privacy():
 
 @bp.get("/health")
 def health():
+    # Liveness: o Railway precisa apenas confirmar que o processo HTTP subiu.
+    # A disponibilidade do banco é validada separadamente em /ready.
+    return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
+
+
+@bp.get("/ready")
+def ready():
     try:
         db.session.execute(text("SELECT 1"))
+        db.session.rollback()
         return {"status": "ok", "database": "ok", "time": datetime.now(timezone.utc).isoformat()}
     except Exception:
         db.session.rollback()
