@@ -1,0 +1,6 @@
+{% extends "admin/base.html" %}
+{% block title %}Biblioteca de mídia{% endblock %}
+{% block content %}
+<div class="admin-page-header"><div><span class="admin-eyebrow">ARQUIVOS</span><h1>Biblioteca de mídia</h1><p>Imagens enviadas em produtos, categorias, banners e clientes.</p></div></div>
+<section class="admin-card"><div class="media-grid">{% for asset in assets %}<article><a href="{{ media_url(asset.file_path) }}" target="_blank"><img src="{{ media_url(asset.file_path) }}" alt="{{ asset.original_name }}"></a><div><strong title="{{ asset.original_name }}">{{ asset.original_name }}</strong><small>{{ (asset.size_bytes / 1024)|round(1) }} KB · {{ asset.created_at|datetime_br }}</small><form method="post" action="{{ url_for('admin.media_delete', asset_id=asset.id) }}" onsubmit="return confirm('Excluir este arquivo? A exclusão será bloqueada caso a mídia esteja em uso.')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Excluir arquivo</button></form></div></article>{% else %}<div class="empty-cell">Nenhuma mídia enviada.</div>{% endfor %}</div>{% include "admin/_pagination.html" %}</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ product.seo_title or product.name }} | Presentear Foz{% endblock %}
+{% block description %}{{ product.seo_description or product.short_description or 'Produto personalizado pela Presentear Foz.' }}{% endblock %}
+{% block content %}
+<section class="section product-detail-section">
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{{ url_for('main.home') }}">Início</a><span>›</span><a href="{{ url_for('shop.catalog') }}">Produtos</a>{% if product.category %}<span>›</span><a href="{{ url_for('shop.catalog', categoria=product.category.slug) }}">{{ product.category.name }}</a>{% endif %}<span>›</span><strong>{{ product.name }}</strong></nav>
+    <div class="product-detail">
+      <div class="product-gallery" data-gallery>
+        <div class="gallery-main">
+          {% if product.primary_image %}<img data-gallery-main src="{{ media_url(product.primary_image.file_path) }}" alt="{{ product.primary_image.alt_text or product.name }}">{% else %}<img data-gallery-main src="{{ url_for('static', filename='img/product-placeholder.svg') }}" alt="{{ product.name }}">{% endif %}
+        </div>
+        {% if product.images|length > 1 %}
+          <div class="gallery-thumbs">{% for image in product.images %}<button type="button" data-gallery-thumb="{{ media_url(image.file_path) }}" class="{% if image.is_primary %}is-active{% endif %}"><img src="{{ media_url(image.file_path) }}" alt="{{ image.alt_text or product.name }}"></button>{% endfor %}</div>
+        {% endif %}
+      </div>
+      <div class="product-info">
+        {% if product.category %}<a class="product-category" href="{{ url_for('shop.catalog', categoria=product.category.slug) }}">{{ product.category.name }}</a>{% endif %}
+        <h1>{{ product.name }}</h1>
+        <div class="product-meta"><span>Código: <strong>{{ product.sku }}</strong></span>{% if product.lead_time %}<span>Prazo: <strong>{{ product.lead_time }}</strong></span>{% endif %}</div>
+        {% if product.short_description %}<p class="lead">{{ product.short_description }}</p>{% endif %}
+        <div class="detail-price">
+          {% if product.show_price and product.price is not none %}
+            {% if product.compare_at_price %}<del>{{ product.compare_at_price|brl }}</del>{% endif %}
+            <strong>{{ product.formatted_price }}</strong><small>Valor unitário de referência. A personalização pode alterar o orçamento.</small>
+          {% else %}
+            <strong>Preço sob orçamento</strong><small>Monte seu carrinho para consultar valores, quantidade e personalização.</small>
+          {% endif %}
+        </div>
+        {% if product.personalization_text %}<div class="info-box"><strong>Personalização</strong><p>{{ product.personalization_text }}</p></div>{% endif %}
+        {% if product.available %}
+          <form class="product-buy-box js-add-to-cart">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <div class="quantity-field"><label for="quantity">Quantidade</label><div class="quantity-control"><button type="button" data-qty-minus>−</button><input id="quantity" name="quantity" type="number" min="{{ product.min_quantity or 1 }}" {% if product.track_stock and product.stock is not none %}max="{{ product.stock }}"{% endif %} value="{{ product.min_quantity or 1 }}"><button type="button" data-qty-plus>+</button></div>{% if product.min_quantity > 1 %}<small>Mínimo: {{ product.min_quantity }} unidades</small>{% endif %}</div>
+            <label class="field-full">Observação da personalização <span>(opcional)</span><textarea name="personalization" rows="3" placeholder="Ex.: nome Kevin, logo da empresa, frase..."></textarea></label>
+            <button class="button button-primary button-large button-block" type="submit">Adicionar ao carrinho</button>
+            <a class="button button-outline button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de saber mais sobre o produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener">Tirar dúvida no WhatsApp</a>
+          </form>
+        {% else %}
+          <div class="product-buy-box unavailable-box"><strong>Produto indisponível no momento</strong><p>Fale com a equipe para consultar reposição ou alternativas personalizadas.</p><a class="button button-whatsapp button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de consultar a disponibilidade do produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener">Consultar pelo WhatsApp</a></div>
+        {% endif %}
+        <div class="safe-notes"><span>✓ Carrinho salvo neste navegador</span><span>✓ Código único para o atendimento</span><span>✓ Sem pagamento online</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% if product.description %}<section class="section section-soft"><div class="container narrow"><span class="eyebrow">DETALHES DO PRODUTO</span><h2>Descrição</h2><div class="prose pre-line">{{ product.description }}</div></div></section>{% endif %}
+{% if related %}<section class="section"><div class="container"><div class="section-heading"><div><span class="eyebrow">VOCÊ TAMBÉM PODE GOSTAR</span><h2>Produtos relacionados</h2></div></div><div class="product-grid">{% for product in related %}{% include "partials/product_card.html" %}{% endfor %}</div></div></section>{% endif %}
+{% endblock %}

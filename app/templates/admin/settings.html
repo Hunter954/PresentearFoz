@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}Configurações{% endblock %}
+{% block content %}
+<div class="admin-page-header"><div><span class="admin-eyebrow">SISTEMA</span><h1>Configurações</h1><p>Atualize contatos, textos da home, cores e regras do carrinho.</p></div></div>
+<form method="post" class="settings-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  {% set group_labels = {'general':'Geral','contact':'Contato','visual':'Identidade visual','home':'Página inicial','commerce':'Carrinho e catálogo'} %}
+  {% for group, rows in groups.items() %}
+    <section class="admin-card form-section"><div class="card-header"><div><h2>{{ group_labels.get(group, group|title) }}</h2></div></div><div class="form-grid two">
+      {% for row in rows %}
+        {% if row.value_type == 'bool' %}<label class="switch-row full"><input type="checkbox" name="{{ row.key }}" {% if row.value|lower in ['true','1','yes','sim','on'] %}checked{% endif %}><span><strong>{{ row.label or row.key }}</strong><small>{{ row.key }}</small></span></label>
+        {% elif row.value_type == 'textarea' %}<label class="full">{{ row.label or row.key }}<textarea name="{{ row.key }}" rows="4">{{ row.value or '' }}</textarea><small>{{ row.key }}</small></label>
+        {% elif row.value_type == 'color' %}<label>{{ row.label or row.key }}<div class="color-input"><input type="color" value="{{ row.value or '#000000' }}" data-color-picker><input name="{{ row.key }}" value="{{ row.value or '' }}" data-color-text></div><small>{{ row.key }}</small></label>
+        {% elif row.value_type == 'int' %}<label>{{ row.label or row.key }}<input type="number" name="{{ row.key }}" value="{{ row.value or '' }}" {% if row.key == 'cart_expiry_days' %}min="14" max="730"{% endif %}><small>{{ row.key }}</small></label>
+        {% else %}<label>{{ row.label or row.key }}<input name="{{ row.key }}" value="{{ row.value or '' }}"><small>{{ row.key }}</small></label>{% endif %}
+      {% endfor %}
+    </div></section>
+  {% endfor %}
+  <div class="settings-save"><button class="admin-button primary" type="submit">Salvar todas as configurações</button></div>
+</form>
+{% endblock %}

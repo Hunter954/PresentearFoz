@@ -1,0 +1,9 @@
+{% if pagination.pages > 1 %}
+<nav class="pagination" aria-label="Paginação">
+  {% if pagination.has_prev %}<a href="{{ url_for('shop.catalog', page=pagination.prev_num, q=search or None, categoria=selected_category.slug if selected_category else None, ordem=sort) }}">←</a>{% endif %}
+  {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+    {% if page_num %}<a class="{% if page_num == pagination.page %}is-active{% endif %}" href="{{ url_for('shop.catalog', page=page_num, q=search or None, categoria=selected_category.slug if selected_category else None, ordem=sort) }}">{{ page_num }}</a>{% else %}<span>…</span>{% endif %}
+  {% endfor %}
+  {% if pagination.has_next %}<a href="{{ url_for('shop.catalog', page=pagination.next_num, q=search or None, categoria=selected_category.slug if selected_category else None, ordem=sort) }}">→</a>{% endif %}
+</nav>
+{% endif %}

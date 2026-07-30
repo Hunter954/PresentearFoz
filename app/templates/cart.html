@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Seu carrinho | Presentear Foz{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><nav class="breadcrumbs"><a href="{{ url_for('main.home') }}">Início</a><span>›</span><strong>Carrinho</strong></nav><h1>Seu carrinho</h1><p>Revise os produtos e envie o código para nossa equipe preparar o orçamento.</p></div></section>
+<section class="section cart-section">
+  <div class="container">
+    {% if cart and cart.items %}
+      {% if cart.status != 'open' %}
+        <div class="cart-sent-banner"><div><span>✓</span><div><strong>Carrinho {{ cart.code }} enviado</strong><p>A equipe consegue localizar esta seleção pelo código. Ao adicionar um novo produto, um novo carrinho será criado.</p></div></div><a class="button button-outline" href="{{ url_for('shop.catalog') }}">Continuar comprando</a></div>
+      {% endif %}
+      <div class="cart-layout">
+        <div class="cart-items">
+          <div class="cart-code"><span>Código do carrinho</span><strong>{{ cart.code }}</strong><button type="button" data-copy="{{ cart.code }}">Copiar</button></div>
+          {% for item in cart.items %}
+            <article class="cart-item" data-cart-item="{{ item.id }}">
+              <a class="cart-item-image" {% if item.product %}href="{{ url_for('shop.product_detail', slug=item.product.slug) }}"{% endif %}><img src="{{ media_url(item.image_snapshot) }}" alt="{{ item.name_snapshot }}"></a>
+              <div class="cart-item-main"><span class="product-sku">{{ item.sku_snapshot }}</span><h2>{{ item.name_snapshot }}</h2>{% if item.personalization %}<p><strong>Personalização:</strong> {{ item.personalization }}</p>{% endif %}{% if item.show_price_snapshot and item.unit_price_snapshot is not none %}<strong class="cart-item-price">{{ item.unit_price_snapshot|brl }} cada</strong>{% else %}<strong class="cart-item-price">Sob orçamento</strong>{% endif %}</div>
+              {% if cart.status == 'open' %}<div class="cart-item-actions"><label>Quantidade<input type="number" min="{{ item.product.min_quantity if item.product and item.product.min_quantity else 1 }}" {% if item.product and item.product.track_stock and item.product.stock is not none %}max="{{ item.product.stock }}"{% endif %} value="{{ item.quantity }}" data-cart-quantity></label><button class="text-button" type="button" data-remove-item>Remover</button></div>{% else %}<div class="cart-item-actions"><strong>{{ item.quantity }} un.</strong></div>{% endif %}
+            </article>
+          {% endfor %}
+          <a class="text-link" href="{{ url_for('shop.catalog') }}">← Continuar escolhendo produtos</a>
+        </div>
+        <aside class="cart-summary">
+          <h2>Resumo da solicitação</h2>
+          <div class="summary-line"><span>Produtos</span><strong>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</strong></div>
+          {% if cart.has_full_pricing %}<div class="summary-total"><span>Total de referência</span><strong>{{ cart.total|brl }}</strong></div>{% else %}<div class="summary-notice"><strong>Valores confirmados no atendimento</strong><p>Personalização, quantidade e prazo serão validados pela equipe.</p></div>{% endif %}
+          {% if cart.status == 'open' %}
+            <form method="post" action="{{ url_for('shop.continue_whatsapp') }}" class="checkout-form">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <label>Seu nome <span>(recomendado)</span><input name="customer_name" value="{{ cart.customer_name or '' }}" placeholder="Como podemos chamar você?"></label>
+              <label>Empresa <span>(opcional)</span><input name="customer_company" value="{{ cart.customer_company or '' }}" placeholder="Nome da empresa"></label>
+              <label>Seu WhatsApp <span>(opcional)</span><input name="customer_phone" value="{{ cart.customer_phone or '' }}" placeholder="(45) 99999-9999"></label>
+              <label>Observações <span>(opcional)</span><textarea name="customer_notes" rows="3" placeholder="Prazo, ocasião, quantidade ou outra informação importante.">{{ cart.customer_notes or '' }}</textarea></label>
+              <button class="button button-whatsapp button-large button-block" type="submit">Continuar no WhatsApp</button>
+              <small>Você será redirecionado com uma mensagem pronta e o código <strong>{{ cart.code }}</strong>.</small>
+            </form>
+          {% else %}
+            <a class="button button-whatsapp button-large button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Quero continuar o atendimento do carrinho ' ~ cart.code ~ '.')|urlencode }}" target="_blank" rel="noopener">Falar sobre este carrinho</a>
+          {% endif %}
+        </aside>
+      </div>
+    {% else %}
+      <div class="empty-state"><div>🛒</div><h2>Seu carrinho está vazio</h2><p>Explore o catálogo e adicione os produtos que deseja personalizar.</p><a class="button button-primary" href="{{ url_for('shop.catalog') }}">Ver produtos</a></div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

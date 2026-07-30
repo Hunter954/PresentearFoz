@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Acesso administrativo | Presentear Foz</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body class="login-page">
+  <div class="login-shell">
+    <div class="login-brand"><img src="{{ url_for('static', filename='img/logo-horizontal.png') }}" alt="Presentear Foz"><p>Painel de gestão do catálogo e dos carrinhos de orçamento.</p></div>
+    <form class="login-card" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <span class="admin-eyebrow">ACESSO RESTRITO</span><h1>Entrar no painel</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="admin-alert {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
+      <label>E-mail<input type="email" name="email" value="{{ email or '' }}" required autofocus autocomplete="username"></label>
+      <label>Senha<input type="password" name="password" required autocomplete="current-password"></label>
+      <button class="admin-button primary block" type="submit">Entrar</button>
+      <a class="back-link" href="{{ url_for('main.home') }}">← Voltar ao site</a>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{% block title %}Painel{% endblock %} | Presentear Foz Admin</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar" data-admin-sidebar>
+    <a class="admin-logo" href="{{ url_for('admin.dashboard') }}"><img src="{{ url_for('static', filename='img/logo-horizontal.png') }}" alt="Presentear Foz"><span>ADMIN</span></a>
+    <nav class="admin-nav">
+      <a class="{% if request.endpoint=='admin.dashboard' %}active{% endif %}" href="{{ url_for('admin.dashboard') }}"><span>▦</span>Visão geral</a>
+      <div class="nav-label">CATÁLOGO</div>
+      <a class="{% if request.endpoint in ['admin.products','admin.product_new','admin.product_edit'] %}active{% endif %}" href="{{ url_for('admin.products') }}"><span>□</span>Produtos</a>
+      <a class="{% if request.endpoint=='admin.categories' %}active{% endif %}" href="{{ url_for('admin.categories') }}"><span>⌗</span>Categorias</a>
+      <a class="{% if request.endpoint=='admin.banners' %}active{% endif %}" href="{{ url_for('admin.banners') }}"><span>▰</span>Banners</a>
+      <a class="{% if request.endpoint=='admin.clients' %}active{% endif %}" href="{{ url_for('admin.clients') }}"><span>◇</span>Clientes</a>
+      <div class="nav-label">ATENDIMENTO</div>
+      <a class="{% if request.endpoint in ['admin.carts','admin.cart_detail'] %}active{% endif %}" href="{{ url_for('admin.carts') }}"><span>🛒</span>Carrinhos</a>
+      <div class="nav-label">GESTÃO</div>
+      <a class="{% if request.endpoint=='admin.media' %}active{% endif %}" href="{{ url_for('admin.media') }}"><span>▧</span>Biblioteca de mídia</a>
+      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.settings' %}active{% endif %}" href="{{ url_for('admin.settings') }}"><span>⚙</span>Configurações</a>{% endif %}
+      {% if current_user.role == 'superadmin' %}<a class="{% if request.endpoint=='admin.users' %}active{% endif %}" href="{{ url_for('admin.users') }}"><span>♙</span>Usuários</a>{% endif %}
+      {% if current_user.role in ['admin','superadmin'] %}<a class="{% if request.endpoint=='admin.audit_logs' %}active{% endif %}" href="{{ url_for('admin.audit_logs') }}"><span>≡</span>Auditoria</a>{% endif %}
+    </nav>
+    <div class="sidebar-footer"><a href="{{ url_for('main.home') }}" target="_blank">Abrir site ↗</a><form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sair</button></form></div>
+  </aside>
+  <div class="admin-shell">
+    <header class="admin-topbar"><button class="sidebar-toggle" type="button" data-sidebar-toggle>☰</button><div><span class="welcome">Olá, {{ current_user.name }}</span><small>{{ current_user.role }}</small></div><a class="topbar-site" href="{{ url_for('main.home') }}" target="_blank">Visualizar loja ↗</a></header>
+    <main class="admin-main">
+      {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="admin-alerts">{% for category, message in messages %}<div class="admin-alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

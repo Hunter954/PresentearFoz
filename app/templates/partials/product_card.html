@@ -1,0 +1,32 @@
+<article class="product-card">
+  <a class="product-image" href="{{ url_for('shop.product_detail', slug=product.slug) }}">
+    {% if product.is_new %}<span class="product-badge">Novidade</span>{% endif %}
+    {% if product.primary_image %}
+      <img src="{{ media_url(product.primary_image.file_path) }}" alt="{{ product.primary_image.alt_text or product.name }}" loading="lazy">
+    {% else %}
+      <img src="{{ url_for('static', filename='img/product-placeholder.svg') }}" alt="{{ product.name }}" loading="lazy">
+    {% endif %}
+  </a>
+  <div class="product-card-body">
+    {% if product.category %}<a class="product-category" href="{{ url_for('shop.catalog', categoria=product.category.slug) }}">{{ product.category.name }}</a>{% endif %}
+    <h3><a href="{{ url_for('shop.product_detail', slug=product.slug) }}">{{ product.name }}</a></h3>
+    <span class="product-sku">Cód. {{ product.sku }}</span>
+    <div class="product-price">
+      {% if product.show_price and product.price is not none %}
+        {% if product.compare_at_price %}<del>{{ product.compare_at_price|brl }}</del>{% endif %}
+        <strong>{{ product.formatted_price }}</strong>
+      {% else %}
+        <strong>Sob orçamento</strong>
+      {% endif %}
+    </div>
+    {% if product.available %}
+      <form class="add-form js-add-to-cart">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="quantity" value="{{ product.min_quantity or 1 }}">
+        <button class="button button-primary button-block" type="submit">Adicionar ao carrinho</button>
+      </form>
+    {% else %}
+      <span class="button button-disabled button-block" aria-disabled="true">Indisponível no momento</span>
+    {% endif %}
+  </div>
+</article>

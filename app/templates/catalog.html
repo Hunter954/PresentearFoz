@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{% if selected_category %}{{ selected_category.name }}{% elif search %}Busca por {{ search }}{% else %}Produtos personalizados{% endif %} | Presentear Foz{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+  <div class="container">
+    <nav class="breadcrumbs"><a href="{{ url_for('main.home') }}">Início</a><span>›</span><span>Produtos</span>{% if selected_category %}<span>›</span><strong>{{ selected_category.name }}</strong>{% endif %}</nav>
+    <h1>{% if selected_category %}{{ selected_category.name }}{% elif search %}Resultados para “{{ search }}”{% else %}Produtos personalizados{% endif %}</h1>
+    <p>{% if selected_category and selected_category.description %}{{ selected_category.description }}{% else %}Escolha os itens, monte seu carrinho e envie o código para solicitar um orçamento pelo WhatsApp.{% endif %}</p>
+  </div>
+</section>
+<section class="section catalog-section">
+  <div class="container catalog-layout">
+    <aside class="filters">
+      <h2>Categorias</h2>
+      <a class="{% if not selected_category %}is-active{% endif %}" href="{{ url_for('shop.catalog', q=search or None) }}">Todos os produtos</a>
+      {% for category in categories %}<a class="{% if selected_category and selected_category.id == category.id %}is-active{% endif %}" href="{{ url_for('shop.catalog', categoria=category.slug, q=search or None) }}">{{ category.name }}</a>{% endfor %}
+    </aside>
+    <div class="catalog-main">
+      <div class="catalog-toolbar">
+        <span><strong>{{ pagination.total }}</strong> produto{% if pagination.total != 1 %}s{% endif %}</span>
+        <form method="get">
+          {% if search %}<input type="hidden" name="q" value="{{ search }}">{% endif %}
+          {% if selected_category %}<input type="hidden" name="categoria" value="{{ selected_category.slug }}">{% endif %}
+          <label>Ordenar por
+            <select name="ordem" onchange="this.form.submit()">
+              <option value="destaques" {% if sort=='destaques' %}selected{% endif %}>Destaques</option>
+              <option value="recentes" {% if sort=='recentes' %}selected{% endif %}>Mais recentes</option>
+              <option value="nome" {% if sort=='nome' %}selected{% endif %}>Nome A–Z</option>
+              <option value="menor-preco" {% if sort=='menor-preco' %}selected{% endif %}>Menor preço</option>
+              <option value="maior-preco" {% if sort=='maior-preco' %}selected{% endif %}>Maior preço</option>
+            </select>
+          </label>
+        </form>
+      </div>
+      {% if products %}
+        <div class="product-grid">{% for product in products %}{% include "partials/product_card.html" %}{% endfor %}</div>
+        {% include "partials/pagination.html" %}
+      {% else %}
+        <div class="empty-state"><div>⌕</div><h2>Nenhum produto encontrado</h2><p>Tente outro termo ou remova os filtros.</p><a class="button button-primary" href="{{ url_for('shop.catalog') }}">Ver todos os produtos</a></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

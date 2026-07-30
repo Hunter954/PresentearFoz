@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}Presentear Foz | Presentes personalizados e gravação a laser{% endblock %}
+{% block description %}Canecas, quadros, térmicos, camisetas, gravação a laser e brindes corporativos personalizados em Foz do Iguaçu.{% endblock %}
+{% block content %}
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-slider" data-slider>
+      {% if banners %}
+        {% for banner in banners %}
+          <article class="hero-slide {% if loop.first %}is-active{% endif %}" {% if banner.image_path %}style="--hero-image:url('{{ media_url(banner.image_path) }}');{% if banner.mobile_image_path %}--hero-mobile-image:url('{{ media_url(banner.mobile_image_path) }}');{% endif %}--overlay:{{ banner.overlay_strength / 100 }}"{% endif %}>
+            <div class="hero-copy">
+              {% if banner.eyebrow %}<span class="eyebrow">{{ banner.eyebrow }}</span>{% endif %}
+              <h1>{{ banner.title }}</h1>
+              {% if banner.subtitle %}<p>{{ banner.subtitle }}</p>{% endif %}
+              {% if banner.button_text %}<a class="button button-accent" href="{{ banner.button_url or url_for('shop.catalog') }}">{{ banner.button_text }}</a>{% endif %}
+            </div>
+            <div class="hero-visual">
+              {% if not banner.image_path %}
+                <div class="gift-art">
+                  <img src="{{ url_for('static', filename='img/favicon.png') }}" alt="">
+                  <span>Personalize. Presenteie. Encante.</span>
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="hero-slide is-active">
+          <div class="hero-copy">
+            <span class="eyebrow">PRESENTES PERSONALIZADOS EM FOZ</span>
+            <h1>{{ setting('hero_title') }}</h1>
+            <p>{{ setting('hero_subtitle') }}</p>
+            <a class="button button-accent" href="{{ url_for('shop.catalog') }}">Explorar produtos</a>
+          </div>
+          <div class="hero-visual"><div class="gift-art"><img src="{{ url_for('static', filename='img/favicon.png') }}" alt=""><span>Feito para ser lembrado</span></div></div>
+        </article>
+      {% endif %}
+      {% if banners|length > 1 %}
+        <div class="slider-dots">{% for banner in banners %}<button class="{% if loop.first %}is-active{% endif %}" data-slide-dot="{{ loop.index0 }}" aria-label="Ir para banner {{ loop.index }}"></button>{% endfor %}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div class="container trust-grid">
+    <div><strong>Atendimento próximo</strong><span>Orçamento direto pelo WhatsApp</span></div>
+    <div><strong>Personalização exclusiva</strong><span>Nomes, fotos, frases e marcas</span></div>
+    <div><strong>Para pessoas e empresas</strong><span>Presentes e brindes corporativos</span></div>
+    <div><strong>Produção em Foz</strong><span>Detalhes cuidados de perto</span></div>
+  </div>
+</section>
+
+{% if categories %}
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div><span class="eyebrow">ENCONTRE O QUE PROCURA</span><h2>Categorias em destaque</h2></div>
+      <a class="text-link" href="{{ url_for('shop.catalog') }}">Ver catálogo completo →</a>
+    </div>
+    <div class="category-grid">
+      {% for category in categories %}
+        <a class="category-card" href="{{ url_for('shop.catalog', categoria=category.slug) }}">
+          <div class="category-image">
+            {% if category.image_path %}<img src="{{ media_url(category.image_path) }}" alt="{{ category.name }}" loading="lazy">{% else %}<span>{{ category.name[0] }}</span>{% endif %}
+          </div>
+          <div><h3>{{ category.name }}</h3><p>{{ category.description or 'Produtos personalizados para cada ocasião.' }}</p></div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if featured_products %}
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-heading">
+      <div><span class="eyebrow">MAIS PROCURADOS</span><h2>Produtos em destaque</h2></div>
+      <a class="text-link" href="{{ url_for('shop.catalog') }}">Ver todos →</a>
+    </div>
+    <div class="product-grid">
+      {% for product in featured_products %}{% include "partials/product_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container split-feature">
+    <div class="split-visual">
+      <div class="brand-panel">
+        <img src="{{ url_for('static', filename='img/logo-full.png') }}" alt="Presentear Foz">
+      </div>
+    </div>
+    <div class="split-copy">
+      <span class="eyebrow">DO SEU JEITO</span>
+      <h2>{{ setting('home_about_title') }}</h2>
+      <p>{{ setting('home_about_text') }}</p>
+      <div class="feature-list">
+        <div><b>01</b><span><strong>Escolha os produtos</strong>Monte sua seleção pelo catálogo.</span></div>
+        <div><b>02</b><span><strong>Envie o carrinho</strong>Um código único vai pelo WhatsApp.</span></div>
+        <div><b>03</b><span><strong>Defina a personalização</strong>Nossa equipe confirma arte, prazo e valores.</span></div>
+      </div>
+      <a class="button button-primary" href="{{ url_for('shop.catalog') }}">Começar agora</a>
+    </div>
+  </div>
+</section>
+
+{% if new_products %}
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-heading light">
+      <div><span class="eyebrow">NOVIDADES</span><h2>Ideias novas para presentear</h2></div>
+      <a class="text-link" href="{{ url_for('shop.catalog', ordem='recentes') }}">Ver novidades →</a>
+    </div>
+    <div class="product-grid">
+      {% for product in new_products %}{% include "partials/product_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if setting('show_clients', true) and clients %}
+<section class="section clients-section">
+  <div class="container">
+    <div class="section-heading centered"><div><span class="eyebrow">QUEM JÁ CONFIOU</span><h2>Clientes e marcas atendidas</h2></div></div>
+    <div class="client-grid">
+      {% for client in clients %}
+        {% if client.website %}<a href="{{ client.website }}" target="_blank" rel="noopener" title="{{ client.name }}">{% else %}<div title="{{ client.name }}">{% endif %}
+        <img src="{{ media_url(client.image_path) }}" alt="{{ client.name }}" loading="lazy">
+        {% if client.website %}</a>{% else %}</div>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="cta-section">
+  <div class="container cta-box">
+    <div><span class="eyebrow">PRECISA DE AJUDA?</span><h2>Conte sua ideia para nossa equipe</h2><p>Escolha pelo catálogo ou fale direto com a Presentear Foz.</p></div>
+    <a class="button button-accent" href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener">Conversar no WhatsApp</a>
+  </div>
+</section>
+{% endblock %}

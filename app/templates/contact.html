@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Contato | Presentear Foz{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">FALE COM A GENTE</span><h1>Vamos personalizar sua ideia?</h1><p>Use o catálogo para montar um carrinho ou chame diretamente no WhatsApp.</p></div></section>
+<section class="section"><div class="container contact-grid"><a class="contact-card" href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener"><span>◉</span><div><small>WhatsApp</small><strong>{{ site_settings.whatsapp_display }}</strong><p>Orçamentos, dúvidas e acompanhamento.</p></div></a><a class="contact-card" href="https://instagram.com/{{ site_settings.instagram }}" target="_blank" rel="noopener"><span>◎</span><div><small>Instagram</small><strong>@{{ site_settings.instagram }}</strong><p>Veja ideias, trabalhos e novidades.</p></div></a><div class="contact-card"><span>⌖</span><div><small>Localização</small><strong>{{ site_settings.address }}</strong><p>Consulte disponibilidade para retirada e atendimento.</p></div></div></div></section>
+<section class="cta-section"><div class="container cta-box"><div><h2>Já sabe quais produtos deseja?</h2><p>Monte o carrinho e envie todos de uma vez com um código único.</p></div><a class="button button-accent" href="{{ url_for('shop.catalog') }}">Abrir catálogo</a></div></section>
+{% endblock %}

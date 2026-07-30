@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="theme-color" content="{{ site_settings.primary_color }}">
+  <title>{% block title %}{{ site_settings.company_name }} | Presentes personalizados em Foz do Iguaçu{% endblock %}</title>
+  <meta name="description" content="{% block description %}Presentes personalizados, gravação a laser e brindes corporativos em Foz do Iguaçu.{% endblock %}">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="canonical" href="{{ request.base_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site_settings.company_name }}">
+  <meta property="og:title" content="{{ self.title()|striptags }}">
+  <meta property="og:description" content="{{ self.description()|striptags }}">
+  <meta property="og:url" content="{{ request.base_url }}">
+  <meta property="og:image" content="{{ site_settings.site_url }}{{ url_for('static', filename='img/logo-original.png') }}">
+  <style>:root{--primary:{{ site_settings.primary_color }};--accent:{{ site_settings.accent_color }};}</style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body data-cart-token="{{ current_cart.token if current_cart else '' }}">
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>📍 {{ site_settings.address }}</span>
+      <div class="topbar-links">
+        <a href="https://instagram.com/{{ site_settings.instagram }}" target="_blank" rel="noopener">@{{ site_settings.instagram }}</a>
+        <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener">WhatsApp {{ site_settings.whatsapp_display }}</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-main">
+      <button class="icon-button mobile-only" type="button" data-menu-toggle aria-label="Abrir menu">☰</button>
+      <a class="brand" href="{{ url_for('main.home') }}" aria-label="Página inicial">
+        <img src="{{ url_for('static', filename='img/logo-horizontal.png') }}" alt="Presentear Foz">
+      </a>
+      <form class="search-form" action="{{ url_for('shop.catalog') }}" method="get" autocomplete="off">
+        <input type="search" name="q" value="{{ request.args.get('q','') }}" placeholder="Busque por canecas, térmicos, brindes..." aria-label="Buscar produtos">
+        <button type="submit">Buscar</button>
+        <div class="search-suggestions" data-search-suggestions></div>
+      </form>
+      <div class="header-actions">
+        <a class="header-action desktop-only" href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener">
+          <span class="action-icon">◉</span>
+          <span><small>Atendimento</small><strong>WhatsApp</strong></span>
+        </a>
+        <a class="cart-link" href="{{ url_for('shop.cart') }}" aria-label="Abrir carrinho">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-label desktop-only"><small>Seu carrinho</small><strong data-cart-label>{{ cart_count }} item{% if cart_count != 1 %}s{% endif %}</strong></span>
+          <span class="cart-badge" data-cart-count>{{ cart_count }}</span>
+        </a>
+      </div>
+    </div>
+    <nav class="category-nav" data-mobile-menu>
+      <div class="container category-nav-inner">
+        <a href="{{ url_for('shop.catalog') }}">Todos os produtos</a>
+        {% for category in nav_categories %}
+          <a href="{{ url_for('shop.catalog', categoria=category.slug) }}">{{ category.name }}</a>
+        {% endfor %}
+        <a href="{{ url_for('main.about') }}">Sobre</a>
+        <a href="{{ url_for('main.contact') }}">Contato</a>
+      </div>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container flash-stack">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='img/logo-horizontal.png') }}" alt="Presentear Foz">
+        <p>{{ setting('footer_text', 'Presentes personalizados e gravação a laser em Foz do Iguaçu.') }}</p>
+      </div>
+      <div>
+        <h3>Produtos</h3>
+        <a href="{{ url_for('shop.catalog') }}">Catálogo completo</a>
+        {% for category in nav_categories[:4] %}<a href="{{ url_for('shop.catalog', categoria=category.slug) }}">{{ category.name }}</a>{% endfor %}
+      </div>
+      <div>
+        <h3>Atendimento</h3>
+        <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener">{{ site_settings.whatsapp_display }}</a>
+        <a href="https://instagram.com/{{ site_settings.instagram }}" target="_blank" rel="noopener">@{{ site_settings.instagram }}</a>
+        <span>{{ site_settings.address }}</span>
+      </div>
+      <div>
+        <h3>Institucional</h3>
+        <a href="{{ url_for('main.about') }}">Sobre a Presentear</a>
+        <a href="{{ url_for('main.contact') }}">Fale conosco</a>
+        <a href="{{ url_for('main.privacy') }}">Política de privacidade</a>
+        <a href="{{ url_for('auth.login') }}">Área administrativa</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© {{ now().year if now is defined else 2026 }} {{ site_settings.company_name }}. Todos os direitos reservados.</span>
+      <span>E-commerce vitrine com orçamento pelo WhatsApp.</span>
+    </div>
+  </footer>
+
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
