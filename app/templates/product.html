@@ -37,7 +37,7 @@
             <a class="button button-outline button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de saber mais sobre o produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i> Tirar dúvida no WhatsApp</a>
           </form>
         {% else %}
-          <div class="product-buy-box unavailable-box"><strong>Produto indisponível no momento</strong><p>Fale com a equipe para consultar reposição ou alternativas personalizadas.</p><a class="button button-whatsapp button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de consultar a disponibilidade do produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener">Consultar pelo WhatsApp</a></div>
+          <div class="product-buy-box unavailable-box"><strong>Produto indisponível no momento</strong><p>Fale com a equipe para consultar reposição ou alternativas personalizadas.</p><a class="button button-whatsapp button-block" href="https://wa.me/{{ site_settings.whatsapp }}?text={{ ('Olá! Gostaria de consultar a disponibilidade do produto ' ~ product.name ~ ' (' ~ product.sku ~ ').')|urlencode }}" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i> Consultar pelo WhatsApp</a></div>
         {% endif %}
         <div class="safe-notes"><span><i class="bi bi-device-ssd" aria-hidden="true"></i> Carrinho salvo neste navegador</span><span><i class="bi bi-upc-scan" aria-hidden="true"></i> Código único para o atendimento</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Sem pagamento online</span></div>
       </div>

@@ -23,10 +23,10 @@
       <form class="add-form js-add-to-cart">
         <input type="hidden" name="product_id" value="{{ product.id }}">
         <input type="hidden" name="quantity" value="{{ product.min_quantity or 1 }}">
-        <button class="button button-primary button-block" type="submit">Adicionar ao carrinho</button>
+        <button class="button button-primary button-block" type="submit"><i class="bi bi-cart-plus" aria-hidden="true"></i> Adicionar ao carrinho</button>
       </form>
     {% else %}
-      <span class="button button-disabled button-block" aria-disabled="true">Indisponível no momento</span>
+      <span class="button button-disabled button-block" aria-disabled="true"><i class="bi bi-slash-circle" aria-hidden="true"></i> Indisponível no momento</span>
     {% endif %}
   </div>
 </article>

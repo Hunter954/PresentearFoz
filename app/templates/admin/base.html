@@ -5,7 +5,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{% block title %}Painel{% endblock %} | Presentear Foz Admin</title>
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 <body class="admin-body">

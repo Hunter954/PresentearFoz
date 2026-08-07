@@ -10,12 +10,12 @@
       {% endif %}
       <div class="cart-layout">
         <div class="cart-items">
-          <div class="cart-code"><span>Código do carrinho</span><strong>{{ cart.code }}</strong><button type="button" data-copy="{{ cart.code }}"><i class="bi bi-copy" aria-hidden="true"></i> Copiar</button></div>
+          <div class="cart-code"><span>Código do carrinho</span><strong>{{ cart.code }}</strong><button type="button" data-copy="{{ cart.code }}"><i class="bi bi-clipboard" aria-hidden="true"></i> Copiar</button></div>
           {% for item in cart.items %}
             <article class="cart-item" data-cart-item="{{ item.id }}">
               <a class="cart-item-image" {% if item.product %}href="{{ url_for('shop.product_detail', slug=item.product.slug) }}"{% endif %}><img src="{{ media_url(item.image_snapshot) }}" alt="{{ item.name_snapshot }}"></a>
               <div class="cart-item-main"><span class="product-sku">{{ item.sku_snapshot }}</span><h2>{{ item.name_snapshot }}</h2>{% if item.personalization %}<p><strong>Personalização:</strong> {{ item.personalization }}</p>{% endif %}{% if item.show_price_snapshot and item.unit_price_snapshot is not none %}<strong class="cart-item-price">{{ item.unit_price_snapshot|brl }} cada</strong>{% else %}<strong class="cart-item-price">Sob orçamento</strong>{% endif %}</div>
-              {% if cart.status == 'open' %}<div class="cart-item-actions"><label>Quantidade<input type="number" min="{{ item.product.min_quantity if item.product and item.product.min_quantity else 1 }}" {% if item.product and item.product.track_stock and item.product.stock is not none %}max="{{ item.product.stock }}"{% endif %} value="{{ item.quantity }}" data-cart-quantity></label><button class="text-button" type="button" data-remove-item><i class="bi bi-trash3" aria-hidden="true"></i> Remover</button></div>{% else %}<div class="cart-item-actions"><strong>{{ item.quantity }} un.</strong></div>{% endif %}
+              {% if cart.status == 'open' %}<div class="cart-item-actions"><label>Quantidade<input type="number" min="{{ item.product.min_quantity if item.product and item.product.min_quantity else 1 }}" {% if item.product and item.product.track_stock and item.product.stock is not none %}max="{{ item.product.stock }}"{% endif %} value="{{ item.quantity }}" data-cart-quantity></label><button class="text-button" type="button" data-remove-item><i class="bi bi-trash" aria-hidden="true"></i> Remover</button></div>{% else %}<div class="cart-item-actions"><strong>{{ item.quantity }} un.</strong></div>{% endif %}
             </article>
           {% endfor %}
           <a class="text-link" href="{{ url_for('shop.catalog') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Continuar escolhendo produtos</a>
