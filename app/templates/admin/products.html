@@ -4,5 +4,41 @@
 <div class="admin-page-header"><div><span class="admin-eyebrow">CATÁLOGO</span><h1>Produtos</h1><p>Cadastre itens, imagens, preços de referência e informações de personalização.</p></div><div class="header-actions"><a class="admin-button secondary" href="{{ url_for('admin.products_export') }}">Exportar CSV</a><a class="admin-button primary" href="{{ url_for('admin.product_new') }}">+ Novo produto</a></div></div>
 <section class="admin-card filter-card"><form class="admin-filters" method="get"><input name="q" value="{{ search }}" placeholder="Buscar por nome ou SKU"><select name="status"><option value="">Todos os status</option>{% for key,label in product_statuses.items() %}<option value="{{ key }}" {% if status==key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><select name="category_id"><option value="">Todas as categorias</option>{% for category in categories %}<option value="{{ category.id }}" {% if category_id==category.id %}selected{% endif %}>{{ category.name }}</option>{% endfor %}</select><button class="admin-button primary" type="submit">Filtrar</button><a class="admin-button ghost" href="{{ url_for('admin.products') }}">Limpar</a></form></section>
 <section class="admin-card"><div class="table-wrap"><table><thead><tr><th>Produto</th><th>SKU</th><th>Categoria</th><th>Preço</th><th>Status</th><th>Destaques</th><th>Atualizado</th><th></th></tr></thead><tbody>{% for product in products %}<tr><td><div class="table-product"><img src="{{ media_url(product.primary_image.file_path if product.primary_image else None) }}" alt=""><div><strong>{{ product.name }}</strong><small>{{ product.short_description or 'Sem descrição curta' }}</small></div></div></td><td>{{ product.sku }}</td><td>{{ product.category.name if product.category else 'Sem categoria' }}</td><td>{% if product.show_price and product.price is not none %}{{ product.price|brl }}{% else %}<span class="muted">Sob orçamento</span>{% endif %}</td><td><span class="status status-{{ product.status }}">{{ product_statuses.get(product.status,product.status) }}</span></td><td>{% if product.is_featured %}<span class="mini-tag">Destaque</span>{% endif %} {% if product.is_new %}<span class="mini-tag accent">Novo</span>{% endif %}</td><td>{{ product.updated_at|datetime_br }}</td><td><div class="row-actions"><a href="{{ url_for('shop.product_detail', slug=product.slug) }}" target="_blank">Ver</a><a href="{{ url_for('admin.product_edit', product_id=product.id) }}">Editar</a>{% if product.status!='archived' %}<form method="post" action="{{ url_for('admin.product_archive', product_id=product.id) }}" onsubmit="return confirm('Arquivar este produto?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Arquivar</button></form>{% endif %}</div></td></tr>{% else %}<tr><td colspan="8" class="empty-cell">Nenhum produto encontrado.</td></tr>{% endfor %}</tbody></table></div>{% include "admin/_pagination.html" %}</section>
+<section class="admin-card bulk-image-card" data-bulk-image-upload>
+  <div class="card-header bulk-image-header">
+    <div>
+      <h2><i class="bi bi-images"></i> Fotos em massa por SKU</h2>
+      <p>O nome de cada arquivo deve ser exatamente o SKU do produto. Ex.: <strong>PFZ-001.jpg</strong> substitui a foto principal do SKU <strong>PFZ-001</strong>.</p>
+    </div>
+    <span class="bulk-image-badge">Automático</span>
+  </div>
+  <form class="bulk-image-form" action="{{ url_for('admin.product_images_bulk') }}" method="post" enctype="multipart/form-data" data-bulk-image-form>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" data-bulk-csrf>
+    <div class="bulk-image-dropzone" data-bulk-dropzone>
+      <i class="bi bi-cloud-arrow-up"></i>
+      <strong>Selecione todas as fotos de uma vez</strong>
+      <span>PNG, JPG, JPEG, WEBP ou GIF. O sistema envia uma por uma para evitar limite de tamanho.</span>
+      <div class="bulk-image-actions">
+        <label class="admin-button primary" for="bulk-image-files"><i class="bi bi-images"></i> Selecionar fotos</label>
+        <label class="admin-button secondary" for="bulk-image-folder"><i class="bi bi-folder2-open"></i> Selecionar pasta</label>
+      </div>
+      <input id="bulk-image-files" class="bulk-image-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple data-bulk-files>
+      <input id="bulk-image-folder" class="bulk-image-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple webkitdirectory directory data-bulk-folder>
+    </div>
+    <div class="bulk-image-queue" data-bulk-queue hidden>
+      <div class="bulk-image-summary">
+        <div><strong data-bulk-count>0 fotos</strong><span data-bulk-current>Prontas para enviar</span></div>
+        <button class="admin-button primary" type="submit" data-bulk-submit><i class="bi bi-arrow-repeat"></i> Atualizar fotos</button>
+      </div>
+      <div class="bulk-progress"><span data-bulk-progress></span></div>
+      <div class="bulk-result-grid">
+        <div class="bulk-result success"><i class="bi bi-check-circle"></i><strong data-bulk-success>0</strong><span>Atualizadas</span></div>
+        <div class="bulk-result warning"><i class="bi bi-search"></i><strong data-bulk-missing>0</strong><span>SKU não encontrado</span></div>
+        <div class="bulk-result danger"><i class="bi bi-exclamation-triangle"></i><strong data-bulk-errors>0</strong><span>Com erro</span></div>
+      </div>
+      <div class="bulk-image-log" data-bulk-log hidden></div>
+    </div>
+  </form>
+</section>
 <section class="admin-card compact-card"><div class="card-header"><div><h2>Importar produtos por CSV</h2><p>Use as mesmas colunas do arquivo exportado. Produtos com o mesmo SKU serão atualizados.</p></div></div><form class="inline-upload" method="post" action="{{ url_for('admin.products_import') }}" enctype="multipart/form-data"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="file" name="csv_file" accept=".csv,text/csv" required><button class="admin-button secondary" type="submit">Importar CSV</button></form></section>
 {% endblock %}

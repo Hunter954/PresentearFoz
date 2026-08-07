@@ -4,6 +4,7 @@ import csv
 import io
 import re
 from functools import wraps
+from pathlib import Path
 from urllib.parse import urlparse
 from datetime import timedelta
 from decimal import Decimal, InvalidOperation
@@ -14,6 +15,7 @@ from flask import (
     abort,
     current_app,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -212,6 +214,85 @@ def products():
         status=status,
         category_id=category_id,
     )
+
+
+@bp.post("/produtos/imagens-em-massa")
+@login_required
+def product_images_bulk():
+    """Replace a product's primary image using the uploaded filename as the SKU."""
+    file = request.files.get("image")
+    if not file or not file.filename:
+        return jsonify({"ok": False, "error": "Nenhuma imagem foi enviada."}), 400
+
+    original_name = Path(file.filename).name
+    sku = Path(original_name).stem.strip().upper()
+    if not sku:
+        return jsonify({"ok": False, "error": "Não foi possível identificar o SKU pelo nome do arquivo."}), 400
+
+    product = Product.query.filter(func.upper(Product.sku) == sku).first()
+    if not product:
+        return jsonify({
+            "ok": False,
+            "status": "not_found",
+            "sku": sku,
+            "filename": original_name,
+            "error": f"SKU {sku} não encontrado.",
+        }), 404
+
+    try:
+        new_path = upload_image(file, f"products/{product.id}")
+        if not new_path:
+            raise ValueError("Não foi possível salvar a imagem.")
+
+        primary = product.primary_image
+        if primary:
+            old_path = primary.file_path
+            primary.file_path = new_path
+            primary.alt_text = product.name
+            primary.is_primary = True
+            ProductImage.query.filter(
+                ProductImage.product_id == product.id,
+                ProductImage.id != primary.id,
+            ).update({"is_primary": False})
+            action = "replaced"
+        else:
+            old_path = None
+            db.session.add(ProductImage(
+                product=product,
+                file_path=new_path,
+                alt_text=product.name,
+                sort_order=0,
+                is_primary=True,
+            ))
+            action = "created"
+
+        audit("product_image_bulk_replace", "product", product.id, {
+            "sku": product.sku,
+            "filename": original_name,
+            "old_path": old_path,
+            "new_path": new_path,
+        })
+        db.session.commit()
+        return jsonify({
+            "ok": True,
+            "status": action,
+            "sku": product.sku,
+            "filename": original_name,
+            "product": product.name,
+            "image_url": url_for("main.uploaded_file", filename=new_path.removeprefix("uploads/")),
+        })
+    except ValueError as exc:
+        db.session.rollback()
+        return jsonify({"ok": False, "sku": sku, "filename": original_name, "error": str(exc)}), 400
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Falha no upload em massa da imagem do SKU %s", sku)
+        return jsonify({
+            "ok": False,
+            "sku": sku,
+            "filename": original_name,
+            "error": "Falha inesperada ao processar esta imagem.",
+        }), 500
 
 
 @bp.route("/produtos/novo", methods=["GET", "POST"])
