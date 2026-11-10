@@ -15,6 +15,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app import create_app
 from app.cli import bootstrap_database
+from app.catalog_import import import_catalog
 from app.extensions import db
 
 
@@ -31,6 +32,14 @@ def main() -> None:
                 print(f"[startup] PostgreSQL disponível (tentativa {attempt}/{attempts}).", flush=True)
                 bootstrap_database(app)
                 print("[startup] Banco, configurações e administrador verificados.", flush=True)
+                # Importação idempotente: executada no deploy, sem exigir comando manual.
+                # Pode ser desativada com AUTO_IMPORT_CATALOG=false em caso de incidente.
+                if os.getenv("AUTO_IMPORT_CATALOG", "true").strip().lower() in {"1", "true", "yes", "on"}:
+                    manifest = os.getenv("CATALOG_MANIFEST", "catalog/products.json")
+                    if not os.path.isfile(manifest):
+                        raise RuntimeError(f"Manifesto do catálogo não encontrado: {manifest}")
+                    stats = import_catalog(manifest)
+                    print(f"[startup] Catálogo sincronizado: {stats}", flush=True)
                 return
             except SQLAlchemyError as exc:
                 db.session.rollback()

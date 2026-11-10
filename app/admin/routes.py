@@ -26,6 +26,7 @@ from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
 
 from ..extensions import db
+from ..product_options import default_colors, parse_colors
 from ..models import (
     AnalyticsEvent,
     AuditLog,
@@ -131,6 +132,10 @@ def _apply_product_form(product: Product):
     product.is_featured = _bool("is_featured")
     product.is_new = _bool("is_new")
     product.personalization_text = request.form.get("personalization_text", "").strip()[:255] or None
+    if request.form.get("options_present") == "1":
+        product.laser_enabled = _bool("laser_enabled")
+        product.sublimation_enabled = _bool("sublimation_enabled")
+        product.colors = parse_colors(request.form, product.colors)
     product.lead_time = request.form.get("lead_time", "").strip()[:120] or None
     product.category_id = request.form.get("category_id", type=int) or None
     product.seo_title = request.form.get("seo_title", "").strip()[:180] or None
@@ -298,7 +303,8 @@ def product_images_bulk():
 @bp.route("/produtos/novo", methods=["GET", "POST"])
 @login_required
 def product_new():
-    product = Product(status="draft", min_quantity=1, show_price=bool(setting("show_prices_default", False)))
+    product = Product(status="draft", min_quantity=1, show_price=bool(setting("show_prices_default", False)),
+                      laser_enabled=True, sublimation_enabled=False, colors=default_colors())
     if request.method == "POST":
         try:
             _apply_product_form(product)

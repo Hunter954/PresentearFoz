@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import secrets
+import hashlib
+import json
 from datetime import timedelta
 from decimal import Decimal
 
@@ -78,15 +80,31 @@ def restore_cart(token: str) -> Cart | None:
     return cart
 
 
-def add_product(product: Product, quantity: int = 1, personalization: str | None = None) -> Cart:
+def add_product(product: Product, quantity: int = 1, personalization: str | None = None,
+                color_id: str = "", method: str = "") -> Cart:
+    colors = product.colors or []
+    color = next((c for c in colors if c["id"] == color_id), None)
+    if color_id and color is None or colors and color is None:
+        raise ValueError("Selecione uma cor disponível para este produto.")
+    methods = dict(product.personalization_methods)
+    if method and method not in methods:
+        raise ValueError("Esta técnica de personalização não está disponível para o produto.")
+    if not method and len(methods) == 1:
+        method = next(iter(methods))
+    elif not method and methods:
+        raise ValueError("Escolha como deseja personalizar este produto.")
+    personalization = (personalization or "").strip()[:500] or None
+    variant_key = hashlib.sha256(json.dumps([color_id, method, personalization], ensure_ascii=False).encode()).hexdigest()
     cart = get_current_cart(create=True, require_open=True)
     if cart is None or cart.status != "open":
         cart = _create_cart()
 
-    quantity = max(int(quantity or 1), int(product.min_quantity or 1))
+    quantity = min(max(int(quantity or 1), int(product.min_quantity or 1)), 99999)
     if product.track_stock and product.stock is not None:
-        quantity = min(quantity, product.stock)
-    existing = CartItem.query.filter_by(cart_id=cart.id, product_id=product.id).first()
+        in_cart = sum(item.quantity for item in cart.items if item.product_id == product.id)
+        if quantity + in_cart > product.stock:
+            raise ValueError("A quantidade total deste produto ultrapassa o estoque disponível.")
+    existing = CartItem.query.filter_by(cart_id=cart.id, product_id=product.id, variant_key=variant_key).first()
     image_path = product.primary_image.file_path if product.primary_image else None
     if existing:
         existing.quantity += quantity
@@ -104,6 +122,11 @@ def add_product(product: Product, quantity: int = 1, personalization: str | None
                 show_price_snapshot=product.show_price,
                 quantity=quantity,
                 personalization=(personalization or "").strip()[:500] or None,
+                variant_key=variant_key,
+                color_name_snapshot=color["name"] if color else None,
+                color_id_snapshot=color_id or None,
+                color_hex_snapshot=color["hex"] if color else None,
+                method_snapshot=method or None,
             )
         )
     cart.expires_at = utcnow() + timedelta(days=int(setting("cart_expiry_days", 180)))
@@ -119,10 +142,20 @@ def update_item(cart: Cart, item_id: int, quantity: int, personalization: str | 
         minimum = item.product.min_quantity if item.product and item.product.min_quantity else 1
         maximum = 99999
         if item.product and item.product.track_stock and item.product.stock is not None:
-            maximum = max(item.product.stock, minimum)
+            other_quantity = sum(other.quantity for other in cart.items if other.product_id == item.product_id and other.id != item.id)
+            maximum = max(item.product.stock - other_quantity, 0)
+            if maximum < minimum or quantity > maximum:
+                raise ValueError("A quantidade total deste produto ultrapassa o estoque disponível.")
         item.quantity = min(max(quantity, minimum), maximum)
         if personalization is not None:
-            item.personalization = str(personalization).strip()[:500] or None
+            new_personalization = str(personalization).strip()[:500] or None
+            new_key = hashlib.sha256(json.dumps([item.color_id_snapshot or "", item.method_snapshot or "", new_personalization], ensure_ascii=False).encode()).hexdigest()
+            duplicate = CartItem.query.filter(CartItem.cart_id == cart.id, CartItem.product_id == item.product_id,
+                                             CartItem.variant_key == new_key, CartItem.id != item.id).first()
+            if duplicate:
+                raise ValueError("Esta combinação já está no carrinho. Ajuste a quantidade do item existente.")
+            item.personalization = new_personalization
+            item.variant_key = new_key
     cart.expires_at = utcnow() + timedelta(days=int(setting("cart_expiry_days", 180)))
     db.session.commit()
     return cart
@@ -171,6 +204,8 @@ def build_whatsapp_message(cart: Cart) -> str:
     ]
     for item in cart.items:
         line = f"• {item.quantity}x {item.name_snapshot} ({item.sku_snapshot})"
+        if item.options_label:
+            line += f" — {item.options_label}"
         if item.personalization:
             line += f" — Personalização: {item.personalization}"
         lines.append(line)

@@ -11,7 +11,7 @@ def test_cart_gets_code_and_persists(client, app):
         product = Product.query.filter_by(status='active').first()
         product_id = product.id
 
-    response = client.post('/api/cart/items', json={'product_id': product_id, 'quantity': 2})
+    response = client.post('/api/cart/items', json={'product_id': product_id, 'quantity': 2, 'color_id': 'branco'})
     assert response.status_code == 200
     data = response.get_json()['cart']
     assert data['code'].startswith('PFZ-')
@@ -25,7 +25,7 @@ def test_cart_gets_code_and_persists(client, app):
 def test_whatsapp_checkout_marks_cart_sent(client, app):
     with app.app_context():
         product_id = Product.query.filter_by(status='active').first().id
-    client.post('/api/cart/items', json={'product_id': product_id, 'quantity': 1})
+    client.post('/api/cart/items', json={'product_id': product_id, 'quantity': 1, 'color_id': 'branco'})
     response = client.post('/carrinho/continuar-whatsapp', data={'customer_name': 'Cliente Teste'})
     assert response.status_code == 302
     assert response.location.startswith('https://wa.me/')

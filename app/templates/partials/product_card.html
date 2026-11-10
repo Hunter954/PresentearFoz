@@ -20,11 +20,15 @@
       {% endif %}
     </div>
     {% if product.available %}
+      {% if product.colors or product.personalization_methods|length > 1 %}
+      <a class="button button-primary button-block" href="{{ url_for('shop.product_detail', slug=product.slug) }}">Escolher opções <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      {% else %}
       <form class="add-form js-add-to-cart">
         <input type="hidden" name="product_id" value="{{ product.id }}">
         <input type="hidden" name="quantity" value="{{ product.min_quantity or 1 }}">
         <button class="button button-primary button-block" type="submit"><i class="bi bi-cart-plus" aria-hidden="true"></i> Adicionar ao carrinho</button>
       </form>
+      {% endif %}
     {% else %}
       <span class="button button-disabled button-block" aria-disabled="true"><i class="bi bi-slash-circle" aria-hidden="true"></i> Indisponível no momento</span>
     {% endif %}

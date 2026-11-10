@@ -33,6 +33,10 @@ def serialize_cart(cart):
                 "sku": item.sku_snapshot,
                 "quantity": item.quantity,
                 "personalization": item.personalization,
+                "color": item.color_name_snapshot,
+                "color_hex": item.color_hex_snapshot,
+                "method": item.method_snapshot,
+                "options_label": item.options_label,
                 "image": media_url(item.image_snapshot),
                 "show_price": item.show_price_snapshot,
                 "unit_price": str(item.unit_price_snapshot) if item.unit_price_snapshot is not None else None,
@@ -73,7 +77,11 @@ def cart_add_item():
     except (TypeError, ValueError):
         quantity = 1
     personalization = str(payload.get("personalization", "")).strip()
-    cart = add_product(product, quantity, personalization)
+    try:
+        cart = add_product(product, quantity, personalization,
+                           str(payload.get("color_id", "")), str(payload.get("method", "")))
+    except ValueError as exc:
+        return jsonify({"ok": False, "message": str(exc)}), 400
     db.session.add(
         AnalyticsEvent(
             event_type="add_to_cart",
@@ -98,7 +106,10 @@ def cart_update_item(item_id):
     except (TypeError, ValueError):
         quantity = 1
     personalization = payload.get("personalization")
-    update_item(cart, item_id, quantity, personalization)
+    try:
+        update_item(cart, item_id, quantity, personalization)
+    except ValueError as exc:
+        return jsonify({"ok": False, "message": str(exc)}), 400
     return jsonify({"ok": True, "cart": serialize_cart(cart)})
 
 

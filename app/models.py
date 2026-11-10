@@ -8,6 +8,7 @@ from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .extensions import db
+from .product_options import default_colors, METHOD_LABELS
 
 
 def utcnow():
@@ -73,6 +74,9 @@ class Product(TimestampMixin, db.Model):
     is_featured = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_new = db.Column(db.Boolean, nullable=False, default=False)
     personalization_text = db.Column(db.String(255))
+    laser_enabled = db.Column(db.Boolean, nullable=False, default=True, server_default=db.true())
+    sublimation_enabled = db.Column(db.Boolean, nullable=False, default=False, server_default=db.false())
+    colors = db.Column(db.JSON, nullable=False, default=default_colors)
     lead_time = db.Column(db.String(120))
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"), index=True)
     seo_title = db.Column(db.String(180))
@@ -86,6 +90,12 @@ class Product(TimestampMixin, db.Model):
         cascade="all, delete-orphan",
         order_by="ProductImage.sort_order, ProductImage.id",
     )
+
+    @property
+    def personalization_methods(self):
+        return [(key, METHOD_LABELS[key]) for key, enabled in (
+            ("laser", self.laser_enabled), ("sublimation", self.sublimation_enabled)
+        ) if enabled]
 
     @property
     def is_active(self) -> bool:
@@ -206,7 +216,7 @@ class Cart(TimestampMixin, db.Model):
 class CartItem(TimestampMixin, db.Model):
     __tablename__ = "cart_items"
     __table_args__ = (
-        UniqueConstraint("cart_id", "product_id", name="uq_cart_product"),
+        UniqueConstraint("cart_id", "product_id", "variant_key", name="uq_cart_product_variant"),
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -219,9 +229,20 @@ class CartItem(TimestampMixin, db.Model):
     show_price_snapshot = db.Column(db.Boolean, nullable=False, default=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
     personalization = db.Column(db.String(500))
+    variant_key = db.Column(db.String(64), nullable=False, default="", server_default="")
+    color_name_snapshot = db.Column(db.String(60))
+    color_id_snapshot = db.Column(db.String(64))
+    color_hex_snapshot = db.Column(db.String(7))
+    method_snapshot = db.Column(db.String(30))
 
     cart = db.relationship("Cart", back_populates="items")
     product = db.relationship("Product")
+
+    @property
+    def options_label(self):
+        return " · ".join(value for value in (
+            self.color_name_snapshot, METHOD_LABELS.get(self.method_snapshot)
+        ) if value)
 
     @property
     def subtotal(self):

@@ -171,4 +171,18 @@
   }
 
   restoreCart();
+  const productImage = document.querySelector('[data-gallery-main]');
+  const originalProductImage = productImage?.src;
+  document.querySelectorAll('[data-color-name]').forEach(input => {
+    input.addEventListener('change', () => {
+      const label = input.closest('fieldset').querySelector('[data-selected-color]');
+      if (label) label.textContent = input.dataset.colorName;
+      if (productImage && originalProductImage) {
+        productImage.src = input.dataset.colorImage || originalProductImage;
+        document.querySelectorAll('[data-gallery-thumb]').forEach(thumb => {
+          thumb.classList.toggle('is-active', thumb.dataset.galleryThumb === productImage.getAttribute('src'));
+        });
+      }
+    });
+  });
 })();

@@ -51,6 +51,8 @@ DEMO_PRODUCTS = [
 def bootstrap_database(app=None):
     if current_app.config.get("AUTO_CREATE_DB", True):
         db.create_all()
+    from .schema_updates import upgrade_product_options
+    upgrade_product_options()
 
     for key, value, value_type, group, label, sort_order in DEFAULT_SETTINGS:
         if not SiteSetting.query.filter_by(key=key).first():
@@ -123,6 +125,18 @@ def bootstrap_database(app=None):
 
 
 def register_commands(app):
+    @app.cli.command("import-catalog")
+    @click.option("--manifest", default="catalog/products.json", type=click.Path(exists=True, dir_okay=False))
+    def import_catalog_command(manifest):
+        """Importa produtos e fotos pelo manifesto revisado; pode ser repetido."""
+        from .catalog_import import import_catalog
+        try:
+            result = import_catalog(manifest)
+        except ValueError as exc:
+            db.session.rollback()
+            raise click.ClickException(str(exc)) from exc
+        click.echo(str(result))
+
     @app.cli.command("bootstrap")
     def bootstrap_command():
         """Cria tabelas, configurações iniciais e usuário administrador."""

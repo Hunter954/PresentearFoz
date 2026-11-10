@@ -31,6 +31,29 @@
         {% if product.available %}
           <form class="product-buy-box js-add-to-cart">
             <input type="hidden" name="product_id" value="{{ product.id }}">
+            <div class="product-options-heading"><span class="eyebrow">DO SEU JEITO</span><h2>Prepare seu presente</h2><p>Escolha os detalhes para o seu orçamento.</p></div>
+            {% if product.colors %}
+            <fieldset class="product-option-group"><legend>Cor do produto <span data-selected-color aria-live="polite">Selecione uma cor</span></legend>
+              <div class="color-swatches">
+              {% for color in product.colors %}
+                <label class="color-swatch" title="{{ color.name }}">
+                  <input type="radio" name="color_id" value="{{ color.id }}" data-color-name="{{ color.name }}" data-color-image="{{ media_url(color.image_path) if color.image_path else '' }}" required>
+                  <span class="swatch-circle" style="--swatch: {{ color.hex }}"><i class="bi bi-check" aria-hidden="true"></i></span><span class="swatch-name">{{ color.name }}</span>
+                </label>
+              {% endfor %}
+              </div>
+              <p class="option-help">A foto é ilustrativa. Confirme a tonalidade com nossa equipe.</p>
+            </fieldset>
+            {% endif %}
+            {% if product.personalization_methods %}
+            <fieldset class="product-option-group"><legend>Como deseja personalizar?</legend>
+              <div class="technique-options">
+              {% for key, label in product.personalization_methods %}
+                <label class="technique-option"><input type="radio" name="method" value="{{ key }}" required {% if product.personalization_methods|length == 1 %}checked{% endif %}><span><i class="bi {{ 'bi-stars' if key == 'laser' else 'bi-palette' }}" aria-hidden="true"></i><strong>{{ label }}</strong><small>{{ 'Nomes, frases e logos gravados na peça.' if key == 'laser' else 'Fotos e artes coloridas em peças próprias para sublimação.' }}</small></span></label>
+              {% endfor %}
+              </div>
+            </fieldset>
+            {% endif %}
             <div class="quantity-field"><label for="quantity">Quantidade</label><div class="quantity-control"><button type="button" data-qty-minus>−</button><input id="quantity" name="quantity" type="number" min="{{ product.min_quantity or 1 }}" {% if product.track_stock and product.stock is not none %}max="{{ product.stock }}"{% endif %} value="{{ product.min_quantity or 1 }}"><button type="button" data-qty-plus>+</button></div>{% if product.min_quantity > 1 %}<small>Mínimo: {{ product.min_quantity }} unidades</small>{% endif %}</div>
             <label class="field-full">Observação da personalização <span>(opcional)</span><textarea name="personalization" rows="3" placeholder="Ex.: nome Kevin, logo da empresa, frase..."></textarea></label>
             <button class="button button-primary button-large button-block" type="submit"><i class="bi bi-cart-plus" aria-hidden="true"></i> Adicionar ao carrinho</button>
