@@ -1,0 +1,453 @@
+{
+  "version": 1,
+  "products": [
+    {
+      "name": "BARRIL - BUJÃO TÉRMICO 1.5L",
+      "category": "BARRIL - BUJÃO",
+      "sku": "PFZ-IMP-6D722736A66E",
+      "image": "images/c2a1fc623a975d48f620af2b.png",
+      "sha256": "c2a1fc623a975d48f620af2b36323f5afc209b08dd9ba961a6399c3c04319e3d",
+      "source_file": "BARRIL - BUJÃO TÉRMICO 1.5L.png"
+    },
+    {
+      "name": "MINI BUJÃO COM ALÇA 1.5L",
+      "category": "BARRIL - BUJÃO",
+      "sku": "PFZ-IMP-E430E192CCFE",
+      "image": "images/88473090127cd711f96735dd.png",
+      "sha256": "88473090127cd711f96735dd57a09e1ada4eb58ecf57260a8b48dca31d0cea96",
+      "source_file": "MINI BUJÃO COM ALÇA 1.5L.png"
+    },
+    {
+      "name": "MINI BUJÃO TÉRMICO 1.2L",
+      "category": "BARRIL - BUJÃO",
+      "sku": "PFZ-IMP-833C582B2F3C",
+      "image": "images/7a3a6fa7a1f21d06cca172ce.png",
+      "sha256": "7a3a6fa7a1f21d06cca172ce181ff0dbe14211df9264f1f811d54a1851128997",
+      "source_file": "MINI BUJÃO TÉRMICO 1.2L.png"
+    },
+    {
+      "name": "CANECA ALÇA CORAÇÃO",
+      "category": "CANECA",
+      "sku": "PFZ-IMP-554B82706016",
+      "image": "images/e0a8258b818329b4413199c2.png",
+      "sha256": "e0a8258b818329b4413199c2ee72b59911754cb9f32c5bfbd79cebcebf424e7b",
+      "source_file": "CANECA ALÇA CORAÇÃO.png"
+    },
+    {
+      "name": "CANECA BRANCA",
+      "category": "CANECA",
+      "sku": "PFZ-IMP-709470DF0DD2",
+      "image": "images/4db35dd71ecbefe8001991e8.png",
+      "sha256": "4db35dd71ecbefe8001991e8fab114402a073b65a5a8d76bc8736538a76d802d",
+      "source_file": "CANECA BRANCA.png"
+    },
+    {
+      "name": "CANECA COLORIDA",
+      "category": "CANECA",
+      "sku": "PFZ-IMP-03A9B0496785",
+      "image": "images/29088eda3726ed93dd725064.png",
+      "sha256": "29088eda3726ed93dd725064ca52ba442e74850f4610d3cdff61fd5c449deaaa",
+      "source_file": "CANECA COLORIDA.png"
+    },
+    {
+      "name": "CANECA SUBLIMATICA TÉRMICA 1.2L",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-C7BC0A3B0E8B",
+      "image": "images/fcaedad656ef9733f62d6fbb.png",
+      "sha256": "fcaedad656ef9733f62d6fbb7181e95e88c94f82e7431f73271cf4b20097bd11",
+      "source_file": "CANECA SUBLIMATICA TÉRMICA 1.2L.png"
+    },
+    {
+      "name": "CANECA TÉRMICA 1.2L",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-E9641C9051EF",
+      "image": "images/12ab530c2ba76184effe0f23.png",
+      "sha256": "12ab530c2ba76184effe0f239c17c0d00e082a99b343f2706f32eed42ad9bfee",
+      "source_file": "CANECA TÉRMICA 1.2L.png"
+    },
+    {
+      "name": "CANECA TÉRMICA 400ML",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-00FEC6B5585B",
+      "image": "images/ded6fb01367e4a1f15e1f0cd.png",
+      "sha256": "ded6fb01367e4a1f15e1f0cdd00ef971ef36bb724d5516d6916c2f56f4f4fa52",
+      "source_file": "CANECA TÉRMICA 400ML.png"
+    },
+    {
+      "name": "CANECA TÉRMICA CAFÉ 350ML",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-65D006A386A9",
+      "image": "images/e308036761fae7e9a2d943ba.png",
+      "sha256": "e308036761fae7e9a2d943ba0e4803579877cdfccc055d4d30e788d6b842e147",
+      "source_file": "CANECA TÉRMICA CAFÉ 350ML.png"
+    },
+    {
+      "name": "CANECA TÉRMICA CAFÉ 450ML",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-C705435F32B5",
+      "image": "images/9f2664a220ad2300d67134d8.png",
+      "sha256": "9f2664a220ad2300d67134d842c8c66d1868fd397f77be68c0acbe3fd77a1977",
+      "source_file": "CANECA TÉRMICA CAFÉ 450ML.png"
+    },
+    {
+      "name": "CANECA TÉRMICA CHOPP 710ML",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-72BFC12353F8",
+      "image": "images/24750c3bf9961fa2a3392ac8.png",
+      "sha256": "24750c3bf9961fa2a3392ac837b16596af95f43b87ea10a61332e0772f700982",
+      "source_file": "CANECA TÉRMICA CHOPP 710ML.png"
+    },
+    {
+      "name": "CANECA TÉRMICA COM ALÇA 900ML",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-2D9341AA9FA9",
+      "image": "images/8bb73528d66b8c5c5ce8daa6.png",
+      "sha256": "8bb73528d66b8c5c5ce8daa64007134cf31ac3e0862ed80d8c86fe466a289942",
+      "source_file": "CANECA TÉRMICA COM ALÇA 900ML.png"
+    },
+    {
+      "name": "CANECA TÉRMICA SUBLIMATICA COM ALÇA 1.2L",
+      "category": "CANECA TÉRMICA",
+      "sku": "PFZ-IMP-E9B1A9B817F5",
+      "image": "images/4571b090a6ef832ed9a3303f.png",
+      "sha256": "4571b090a6ef832ed9a3303ff0b2db8a7b12a3cb2700e0d215977454d66eabd9",
+      "source_file": "CANECA TÉRMICA SUBLIMATICA COM ALÇA 1.2L.png"
+    },
+    {
+      "name": "COPO TÉRMICO 200ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-FBAA9E755C8A",
+      "image": "images/61b585e73a88c7f297e3d664.png",
+      "sha256": "61b585e73a88c7f297e3d6645320b618d7aae0390ea5d5fd1f5ed0b0ca69f363",
+      "source_file": "COPO TÉRMICO 200ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO 350ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-150D74A5CB9A",
+      "image": "images/5d7283509f03f9876e9aff44.png",
+      "sha256": "5d7283509f03f9876e9aff44741434442ca2df19adf73c9020a1d95cc6eda49c",
+      "source_file": "COPO TÉRMICO 350ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO 3X1",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-046F995C11F9",
+      "image": "images/1986fcab12073f5e4237de41.png",
+      "sha256": "1986fcab12073f5e4237de417fb3109ac148666fe183c20d92fc7562932589f2",
+      "source_file": "COPO TÉRMICO 3X1.png"
+    },
+    {
+      "name": "COPO TÉRMICO 475ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-307AF6C49361",
+      "image": "images/fbdd43f08155c8e77122b6b2.png",
+      "sha256": "fbdd43f08155c8e77122b6b2678cc91dbdd35ee3413ad80cf173c1e006058b26",
+      "source_file": "COPO TÉRMICO 475ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO 500ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-04CA4B012D05",
+      "image": "images/64323e6c3b156d6b2c3b56c8.png",
+      "sha256": "64323e6c3b156d6b2c3b56c810cd7939d085a229488d960203d2a7a8c9eec2f4",
+      "source_file": "COPO TÉRMICO 500ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO CAFÉ 500ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-7CB618270E2B",
+      "image": "images/a21524d6d76c58306b7d6f90.png",
+      "sha256": "a21524d6d76c58306b7d6f902780bd8021ffd44c02bec69af89ad118efb8dadb",
+      "source_file": "COPO TÉRMICO CAFÉ 500ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO CAFÉ 800ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-AAAB4EF7FDCC",
+      "image": "images/1e1ff985e578426108fb77ba.png",
+      "sha256": "1e1ff985e578426108fb77ba2e2cacdefdf37a06982ec23fdbea225623ee0712",
+      "source_file": "COPO TÉRMICO CAFÉ 800ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO CHOPP 710ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-A6D1D233B42F",
+      "image": "images/a61a822814633f7b49a7b0b9.png",
+      "sha256": "a61a822814633f7b49a7b0b912f336c9227b1bef4e4f3282e3916f827b5dbb08",
+      "source_file": "COPO TÉRMICO CHOPP 710ML.png"
+    },
+    {
+      "name": "COPO TÉRMICO CUIA 360ML",
+      "category": "COPO TÉRMICO",
+      "sku": "PFZ-IMP-7E90711D1457",
+      "image": "images/3782af845496cebaae924a91.png",
+      "sha256": "3782af845496cebaae924a91662fa2a1fd967392119ae06477c096da529e6d79",
+      "source_file": "COPO TÉRMICO CUIA 360ML.png"
+    },
+    {
+      "name": "GARRAFA TERMICA DEGRADE SUBLIMATICA 600ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-8B2D6229500C",
+      "image": "images/6871be45a8f78f7491543d60.png",
+      "sha256": "6871be45a8f78f7491543d60d4ad85dbad34f5db49d68c21a65ea8c2ca5a1a6a",
+      "source_file": "GARRAFA TERMICA DEGRADE SUBLIMATICA 600ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA 750ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-82B3F373372D",
+      "image": "images/214f98a3e14f53f1c077744c.png",
+      "sha256": "214f98a3e14f53f1c077744ccec0334ddb34e011a072e9581d1de23de2a7769f",
+      "source_file": "GARRAFA TÉRMICA  750ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA 500ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-D78CE62E90BD",
+      "image": "images/c954a9087f560333310caadc.png",
+      "sha256": "c954a9087f560333310caadcb7131cb1a062be0228aae35ae079d5df5fce8b82",
+      "source_file": "GARRAFA TÉRMICA 500ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA 600ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-08F6B7579DFF",
+      "image": "images/87debdb6b2b5da4aeb836f81.png",
+      "sha256": "87debdb6b2b5da4aeb836f817d3473a1b8d036e8415d742a53b8cc9a82ff3205",
+      "source_file": "GARRAFA TÉRMICA 600ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA 800ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-EF81EED35F5C",
+      "image": "images/5c51dd5648685660712c73fa.png",
+      "sha256": "5c51dd5648685660712c73fa505ae5955510d2ef37c6a38498cbbe658f618f9f",
+      "source_file": "GARRAFA TÉRMICA 800ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA BAMBOO SUBLIMATICA 500ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-4B213BEA032C",
+      "image": "images/214bef0edc22990dc6ffef01.png",
+      "sha256": "214bef0edc22990dc6ffef012cabdfdf04cf7bff6f6232373eec925bbff6cf43",
+      "source_file": "GARRAFA TÉRMICA BAMBOO SUBLIMATICA  500ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA CAFÉ 800ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-ABDEA586ABF4",
+      "image": "images/3678dd24504f936b3cee0ba0.png",
+      "sha256": "3678dd24504f936b3cee0ba009a11c880fc885005d925a0980a8001043c549cc",
+      "source_file": "GARRAFA TÉRMICA CAFÉ 800ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA COM ALÇA 500ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-56A62A162A86",
+      "image": "images/f28a2b07a8091dd2c010f99f.png",
+      "sha256": "f28a2b07a8091dd2c010f99fcb7246ba55dc223962f5a979f6cd8ec709237a26",
+      "source_file": "GARRAFA TÉRMICA COM ALÇA 500ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA COM ALÇA 600ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-6BA85764A3A0",
+      "image": "images/d6205fda9de4843ae06e41fe.png",
+      "sha256": "d6205fda9de4843ae06e41fe5690d81d08c7b85b89b15c3472275e7da9f26d91",
+      "source_file": "GARRAFA TÉRMICA COM ALÇA 600ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA COM BICO 500ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-150C67D15363",
+      "image": "images/c3c2f0fafc5bef4eeba3271a.png",
+      "sha256": "c3c2f0fafc5bef4eeba3271a67941db921c61241e8d4023a740100dcc3b85fb1",
+      "source_file": "GARRAFA TÉRMICA COM BICO 500ML.png"
+    },
+    {
+      "name": "GARRAFA TÉRMICA GLITTER 950ML",
+      "category": "GARRAFA TÉRMICA",
+      "sku": "PFZ-IMP-6E70F39D6CBD",
+      "image": "images/ab85a1dad7ac5b7b6e61daab.png",
+      "sha256": "ab85a1dad7ac5b7b6e61daab37bb7c7d025f6c4bcec5b65b5c4be618e0c9f086",
+      "source_file": "GARRAFA TÉRMICA GLITTER 950ML.png"
+    },
+    {
+      "name": "GARAFA INFANTIL SUBLICATICA 600ML",
+      "category": "INFANTIL",
+      "sku": "PFZ-IMP-314252BAB8AF",
+      "image": "images/372dc503b8975abcc9bfd017.png",
+      "sha256": "372dc503b8975abcc9bfd017f6fa05504e61cf175647da6235ddbac162c63aa1",
+      "source_file": "GARAFA INFANTIL SUBLICATICA 600ML.png"
+    },
+    {
+      "name": "GARRAFA 2 INFANTIL SUBLIMATICA 500ML",
+      "category": "INFANTIL",
+      "sku": "PFZ-IMP-72834322E201",
+      "image": "images/1ee3ffb3d25f620ac15e4acb.png",
+      "sha256": "1ee3ffb3d25f620ac15e4acb09ec916d431c670d7b17ba532044ada7be3ca73f",
+      "source_file": "GARRAFA 2 INFANTIL SUBLIMATICA 500ML.png"
+    },
+    {
+      "name": "GARRAFA INFANTIL SUBLIMATICA 450ML",
+      "category": "INFANTIL",
+      "sku": "PFZ-IMP-2B00C7589E88",
+      "image": "images/4bb863ad3b5d426d254c2dc4.png",
+      "sha256": "4bb863ad3b5d426d254c2dc4b160336c9ec1285ec094f1bf33d96bca80fc92b1",
+      "source_file": "GARRAFA INFANTIL SUBLIMATICA 450ML.png"
+    },
+    {
+      "name": "GARRAFA INFANTIL SUBLIMATICA 500ML",
+      "category": "INFANTIL",
+      "sku": "PFZ-IMP-99F06D653E3A",
+      "image": "images/159aafb12df5a7a0cc5e0753.png",
+      "sha256": "159aafb12df5a7a0cc5e0753d5f8863abd251d538705edd54dbd63fb15340deb",
+      "source_file": "GARRAFA INFANTIL SUBLIMATICA 500ML.png"
+    },
+    {
+      "name": "MATEIRA TÉRMICA 1L",
+      "category": "MATEIRA",
+      "sku": "PFZ-IMP-6169FE7B6B53",
+      "image": "images/13b12de7e6d31f32e3c5deb1.png",
+      "sha256": "13b12de7e6d31f32e3c5deb1843e5dcad841f27d95b61e052157e15d98923983",
+      "source_file": "MATEIRA TÉRMICA 1L.png"
+    },
+    {
+      "name": "BALDE DE PIPOCA SÃO PAULO",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-F0A5C29C1009",
+      "image": "images/eef9978f1ced329ec089f7cf.png",
+      "sha256": "eef9978f1ced329ec089f7cf287b24432871b9c6913ae5dd754edf0b26b34775",
+      "source_file": "BALDE DE PIPOCA SÃO PAULO.png"
+    },
+    {
+      "name": "CANECA CHOPP EM GEL 300ML",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-8D27D2E6A30E",
+      "image": "images/0f1bc5b83b4ebe75dc2cf351.png",
+      "sha256": "0f1bc5b83b4ebe75dc2cf3512c4bfd8898f2b2292be764bc1d8e113a68a7476a",
+      "source_file": "CANECA CHOPP EM GEL 300ML.png"
+    },
+    {
+      "name": "CANECA FOSCA",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-E4CBBC7E789A",
+      "image": "images/fbd9c745fa3da2262915b403.png",
+      "sha256": "fbd9c745fa3da2262915b403396134f2842526fd33baa3c96c82b6cd4c5cd25f",
+      "source_file": "CANECA FOSCA.png"
+    },
+    {
+      "name": "CANECA GLITTER",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-625D86C948E1",
+      "image": "images/f8dd63b1142e0f3a21dbcb9a.png",
+      "sha256": "f8dd63b1142e0f3a21dbcb9a66d1eaaa50ebcc7589130d46e168f6f800843865",
+      "source_file": "CANECA GLITTER.png"
+    },
+    {
+      "name": "COPO CHOPP 200ML",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-8223F694302E",
+      "image": "images/251c246ad40a75d440f2a122.png",
+      "sha256": "251c246ad40a75d440f2a122f06e59708da0a3e0022cccb41503bb54d26bf832",
+      "source_file": "COPO CHOPP 200ML.png"
+    },
+    {
+      "name": "COPO CHOPP UNICO CORINTHIANS",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-68417798D4E4",
+      "image": "images/f79890bc088cf26a4fc9669a.png",
+      "sha256": "f79890bc088cf26a4fc9669a2ba44a9ea8c76b1e3d9021b759bb08f3c679e9ff",
+      "source_file": "COPO CHOPP UNICO CORINTHIANS.png"
+    },
+    {
+      "name": "COPO DUPLO CHOPP GREMIO",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-E9B67472386F",
+      "image": "images/c46b274246d7ee83551b153a.png",
+      "sha256": "c46b274246d7ee83551b153ae4b6727dede332a08c54680586639a3e5dbe04ab",
+      "source_file": "COPO DUPLO CHOPP GREMIO.png"
+    },
+    {
+      "name": "COPO FRASES 350ML",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-79BCF24E87D3",
+      "image": "images/111b151cbfc31bae2eb4dd3b.png",
+      "sha256": "111b151cbfc31bae2eb4dd3b16273757df97c075e296efcd253e89637c0fe15d",
+      "source_file": "COPO FRASES 350ML.png"
+    },
+    {
+      "name": "KIT 2 XÍCARAS SALMOS",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-88D6526C6E6E",
+      "image": "images/002ea42629bbedf9c969e02c.png",
+      "sha256": "002ea42629bbedf9c969e02c9a240febbe09c3ec1a2f604eefd7a5983e335f95",
+      "source_file": "KIT 2 XÍCARAS SALMOS.png"
+    },
+    {
+      "name": "KIT CAIPIRINHA 4 PEÇAS SÃO PAULO",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-FA00697018AF",
+      "image": "images/db12e315fe260fbb9f550f69.png",
+      "sha256": "db12e315fe260fbb9f550f69aafc3060dd8ae35036ec010d0ef71da42a552518",
+      "source_file": "KIT CAIPIRINHA 4 PEÇAS SÃO PAULO.png"
+    },
+    {
+      "name": "KIT CAIPIRINHA GREMIO",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-27CD9F861FCB",
+      "image": "images/ce05445e8a517b71206b0edf.png",
+      "sha256": "ce05445e8a517b71206b0edf0aec052174d42b4f256869f1331d828cb733193b",
+      "source_file": "KIT CAIPIRINHA GREMIO.png"
+    },
+    {
+      "name": "TAÇA DUPLA CORINTHIANS",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-1E42319FC5CC",
+      "image": "images/669d7a58165e3365bbf9f667.png",
+      "sha256": "669d7a58165e3365bbf9f667f572eb5396207c620f7eb49ebb35c704a06e6957",
+      "source_file": "TAÇA DUPLA CORINTHIANS.png"
+    },
+    {
+      "name": "TAÇA INTERNACIONAL",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-1A92DFB461B3",
+      "image": "images/c75037d2b937690b535435ee.png",
+      "sha256": "c75037d2b937690b535435eef42ca4ec36665d0712a496ed9cedd38c6d87090c",
+      "source_file": "TAÇA INTERNACIONAL.png"
+    },
+    {
+      "name": "TAÇA VIDRO INTERNACIONAL",
+      "category": "PRESENTES",
+      "sku": "PFZ-IMP-C21B778E331A",
+      "image": "images/579792417ec828d41cde440e.png",
+      "sha256": "579792417ec828d41cde440ef44f39edd513253d7fbc0d2a17dd1b39425847f6",
+      "source_file": "TAÇA VIDRO INTERNACIONAL.png"
+    },
+    {
+      "name": "TAÇA CAFÉ 230ML",
+      "category": "TAÇA",
+      "sku": "PFZ-IMP-CE9B86E3A484",
+      "image": "images/36569608d7415453aa2f751a.png",
+      "sha256": "36569608d7415453aa2f751a0bac14c8d15eb7a07a16e15e7d4b71a332002580",
+      "source_file": "TAÇA CAFÉ 230ML.png"
+    },
+    {
+      "name": "TAÇA TÉRMICA DRINKS 400ML",
+      "category": "TAÇA TÉRMICA",
+      "sku": "PFZ-IMP-31A4CAB85FA2",
+      "image": "images/2b27167c88c467824b33579c.png",
+      "sha256": "2b27167c88c467824b33579c082ff26aa00cb16f13e2ef92c69c612b6a6a11e4",
+      "source_file": "TAÇA TÉRMICA DRINKS 400ML.png"
+    },
+    {
+      "name": "TAÇA TÉRMICA DRINKS 550ML",
+      "category": "TAÇA TÉRMICA",
+      "sku": "PFZ-IMP-3DEFF7AE56CC",
+      "image": "images/18905329bfaf9b0410d74298.png",
+      "sha256": "18905329bfaf9b0410d7429865bbcd7af3c9732e700914622e0328788853c640",
+      "source_file": "TAÇA TÉRMICA DRINKS 550ML.png"
+    }
+  ]
+}
